@@ -1,0 +1,203 @@
+﻿# Exported by Aegisub 3.2.2
+Hello Everybody
+Today we will be talking about our work
+CubeSat Magnetic Atlas and in-Orbit Compensation of Residual Magnetic Dipole
+Magnetic disturbances from satellite subsystems
+ have concerned many satellite missions over the lifetime of space industry
+Whether for purposes of study of surrounding field data
+like in old satellites missions CASSINI and THEMIS
+or for purposes of magnetic attitude control
+Electromagnetic cleanness program (EMC) is a technique
+is a technique that was developed to handle this problem
+ through defining the magnetic sources and then either
+shield them, compensate them or eliminate them to a specified limit
+The identification is done through measurements in huge facilities
+with external field cancellation
+For a LEO cubesat that plans to use magnetic control
+like PRISM cubesat
+this procedure isn`t enough
+ and it still suffers from residual magnetization
+that disturbs its magnetic control
+which requires further sources identification and elementation
+Through this work
+we are proposing a complementing procedure to EMC
+ in which all residual magnetic disturbances are modeled
+and fed to extended kalman filter to produce an atlas
+that could be used in the cubesat control
+to modify its performance
+There are two components to consider
+in magnetic attitude and control
+earth's magnetic field measurement through magnetometer
+and control through magnetorquers
+Disturbances affect both sides
+ in the first step as residual magnetic field of the satellite is measured
+and  in the second step as addition of a magnetization value
+The sources for this are many
+and we intend to handle only wire tracks in this work
+The plan is to start with satellite design
+import it to our software tool
+which should produce a magnetic field
+and torque distribution in the satellites size
+This tool would need verification and correction
+which we plan to use hardware measurements for
+ The final correct model should then be imported
+to the satellite control simulation to test them
+and establish satellite control
+and maximum values allowed
+in the field distribution
+These values could now be used to
+optimize the satellite design
+Finally, the control would be implemented on the satellite
+Our work is in wires
+Biot and savat law for magnetic field
+due to current in wire is the following one you see in the slide
+with r as the distance from the point of measurement to the wire
+We can deduce the force and torque on a wire
+due to an external magnetic field in the following equations
+We are however more interested in wires participation
+rather than the external field
+so some further adjustments lead us to the M capital matrix
+which is an expression of wire magnetization
+so we are also calculating it
+The magnetorquers use a vector form for magnetic moment however
+Which is m_ctrl here
+so later some adjustments will be done on the matrix
+to be possible to use it
+For the purposes of this work
+we were limited to analysis of some parts of
+ the energy power system of the satellite
+which are solar panels and EPS PCB
+along with on board computer PCB
+The components are placed in their position
+ in the real satellite as seen in the image
+PCBs were available in the design software
+and we had then to import them to be read
+as tracks in MATLAB without components
+Current direction and values were required for the solution
+so some assumptions were made to produce them
+Which you can see in the slide
+We got to detect and analyze all the tracks in red
+and Solar panels as you have seen before were modeled
+as wires which are the green ones
+and were double wired in a technique to
+remove their magnetization effect
+The results for magnetic field models are in two forms
+constant due to PCBs like in the figure here
+and time varying due to the change in
+solar panels exposure to the sun
+Like seen in the GIF in the top
+Now that the magnetic disturbance models are set
+we shall proceed to describe the algorithms for mapping
+identifying and rejecting the magnetic disturbances
+We shall consider an example mission of
+ a magnetically controlled 3U CubeSat in the ISS orbit
+The attitude control is to align the body frame and the orbital frame
+We will show the performance of 
+a magnetometer-based Extended Kalman filter to estimate
+ both the state variables and the residual magnetization
+The filter maps the magnetic disturbances
+ to the residual magnetic moment and the magnetometer bias
+thus creating a set of maps 
+for all principal regimes of the spacecraft
+We use quaternion kinematics and Euler dynamical equations
+to model the rotations of the spacecraft
+The model includes the gravity torque 
+and the control torque produced by the magnetorquers
+Other environmental torques are evaluated to be
+one order of magnitude smaller than the magnetic disturbance
+hence they are modeled as random noise
+It is important to note here the torque due to
+ residual magnetization that comes directly
+from the matrices described earlier
+A Lyapunov-based magnetic PD controller
+is used in the attitude control loop
+The control loop parameters are
+ 5 seconds for control 
+and 1 second for measurements
+The plot shows the required control moment
+which is of the order of ten to the power of -3
+This sets a limit to the admissible level of magnetization
+ If we assume a 10% error in identification
+of the magnetic disturbance by EKF then
+ten to the power of -3 magnetic moment distorts
+the control action by 10%
+which is enough to degrade the control quality
+If magnetic disturbances are not identified and rejected
+he spacecraft is rendered uncontrollable
+ when the value of residual magnetic moment 
+is already 1e-4 which is really small
+We introduce the EKF that identifies 
+the attitude quaternion
+the vector of angular velocity
+ and the residual magnetic moment
+ and the magnetometer bias
+This slide presents simulation results  for our 
+model with a constant residual magnetic moment
+The plot shows how the control quality
+degrades as the magnitude of
+the residual magnetic moment increases
+It is seen that the adcs performance
+expressed through Euler angles
+is still acceptable when the magnitude 
+of residual moment is at 2.5*ten to the power of -3
+which agrees with the earlier estimates
+This is one of the examples of
+the system’s controlled dynamics in
+the presence of magnetic disturbances
+which are identified and rejected
+The relative error of magnetic moment identification
+ is shown as bounded by 4:6% in each component
+Now we shall adopt the matrices
+obtained from the magnetization model
+ to simulate the spacecraft dynamics
+ with varying magnetic disturbances
+The torque and bias matrices
+are rescaled for this example
+to produce an adequate level of disturbance
+It is also shown here that the magnetization
+ due to solar panels is changing
+depending on the spacecraft attitude
+and the incident angle of sunlight
+This is an example with
+the varying magnetic disturbance
+The disturbance values are shown above the plot
+Resulting pointing accuracy is about 5 degrees
+ The result is not different from 
+our simulations with the constant
+ residual magnetic moment
+which means that the filter can
+track the varying disturbance
+With a sudden change of regime
+as shown in the plots here
+magnetic disturbance can also change
+ In this example the control quality becomes worse
+ and it takes about two hours to recover
+The filter converged to certain estimates
+of magnetic moment and magnetometer bias
+These values are taken as
+ the initial guess for this regime
+ Obtaining these values for all principal regimes
+ is equivalent to having an atlas of magnetic disturbances
+This slide shows what happens if we feed
+the magnetic moment and magnetometer bias estimated
+ for the regime to the filter exactly when the regime starts
+This research has been important for us
+because the work we do is going to
+be a part of the Skoltech Swarm mission
+comprising 4 magnetically controlled CubeSats
+So far the learning outcomes are
+The magnetic field produced through PCBs
+poses a significant value 
+ that it should be monitored
+over the operation regimes of the satellite
+Having an atlas of magnetic disturbances
+does enhance EKF performance
+which gives our mission more time
+to spend for its scientific tasks 
+We should the operational example
+of the magnetometer-based EKF
+ but we are going to fuse additional sensors
+gyros and sun sensors in our mission
+and this will make the proposed EKF
+even more robust 
+Thank you for your attention
