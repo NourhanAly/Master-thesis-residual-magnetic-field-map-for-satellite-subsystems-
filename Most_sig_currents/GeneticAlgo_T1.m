@@ -1,0 +1,13 @@
+clear all
+clc
+fitness = @FitFnc;
+nvars = 3*6;
+lb = [-5 , -5 , -15 , -5 , -5 , -5,...
+    -5 , -5 , -15 , -5 , -5 , -5,...
+    -5 , -5 , -15 , -5 , -5 , -5];
+ub = [5 , 5 , 15 , 5 , 5 , 5,...
+    5 , 5 , 15 , 5 , 5 , 5,...
+    5 , 5 , 15 , 5 , 5 , 5];
+options = optimoptions('ga','FunctionTolerance',1e-12,'PlotFcn', @gaplotbestf , 'FitnessLimit' , 1e-12 , 'ConstraintTolerance' , 1e-12)
+[x , fval,exitflag,output] = ga(fitness  , nvars , [] , [] , [] , [] ,lb , ub ,[] , options)
+
