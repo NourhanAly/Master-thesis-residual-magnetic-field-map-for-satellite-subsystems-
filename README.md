@@ -1,0 +1,5 @@
+This respiratory is the product of my master thesis titled: Modelling and Construction of Residual Magnetic Field Parameters Map for Satellite Subsystems
+ 
+ Magnetic cleanliness and in-flight identification of residual magnetization effects for a magnetically controlled 3U CubeSat are some of the main criteria of a successful magnetic control subsystem. This work represents an in-house software to calculate the magnetic disturbances due to currents flowing through printed circuit boards (PCBs) and solar panels of a CubeSat. The procedure imports the specified components of the CubeSat as placed in the original design and then calculates the electrical participation to the magnetic disturbances. The CubeSat model is obtained from Skoltech Swarm mission which plans to launch four CubeSats utilizing magnetic control. The disturbances are calculated for one operation mode and for disturbances varying as solar panels exposure angle to the sun changes. 
+
+ The software to read the components is designed in Matlab using files from Altium software and inputs from the engineering team.
